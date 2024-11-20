@@ -14,30 +14,28 @@
 
     <script>
         function encryptText() {
+            const ukrAlphabetLower = "абвгґдеєжзиіїйклмнопрстуфхцчшщьюя";
+            const ukrAlphabetUpper = "АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ";
+
             // Отримуємо введений текст з textarea
             let inputText = document.getElementById('inputText').value;
 
-            // Функція для шифрування
-            // inputText.split('') — розбиває рядок на масив символів.
+            // Функція шифрування
             let encryptedText = inputText.split('').map(char => {
-                // Перевіряємо, чи це літера
-                if (/[а-яА-Я]/.test(char)) {
-                    // тримуємо кодО символу
-                    let charCode = char.charCodeAt(0);
-
-                    // Якщо літера "я", заміняємо на "а"
-                    if (char === 'я') {
-                        return 'а';
-                    } else if (char === 'Я') {
-                        return 'А';
-                    }
-
-                    // Інакше додаємо 1 до коду символу (наступна літера)
-                    return String.fromCharCode(charCode + 1);
+                // Перевіряємо, чи символ є малою літерою українського алфавіту
+                if (ukrAlphabetLower.includes(char)) {
+                    let index = ukrAlphabetLower.indexOf(char);
+                    return ukrAlphabetLower[(index + 1) % ukrAlphabetLower.length];
                 }
+
+                // Перевіряємо, чи символ є великою літерою українського алфавіту
+                if (ukrAlphabetUpper.includes(char)) {
+                    let index = ukrAlphabetUpper.indexOf(char);
+                    return ukrAlphabetUpper[(index + 1) % ukrAlphabetUpper.length];
+                }
+
                 // Якщо це не літера, залишаємо символ без змін
                 return char;
-            // .join('') — знову збираємо масив символів в рядок.
             }).join('');
 
             // Вивести зашифрований текст
